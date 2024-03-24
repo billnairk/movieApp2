@@ -25,3 +25,10 @@ export const MovieTitle = styled(motion.span)`
   height: 32px;
   text-align: center;
 `;
+
+export const AppDiv = styled.div`
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
