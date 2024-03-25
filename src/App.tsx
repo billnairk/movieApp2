@@ -9,6 +9,8 @@ import {
   MovieTitle,
   AppDiv,
 } from "../components/movieImgStyles";
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
 function App() {
   const { data } = useQuery({
@@ -35,6 +37,20 @@ function App() {
       opacity: 1,
     },
   };
+
+  const CardContainer = styled(motion.div)`
+    &:hover {
+      scale: 1.2;
+    }
+    transition: 0.5s;
+  `;
+  const cardVariants = {
+    start: { scale: 1, opacity: 1 },
+    end: {
+      scale: 1,
+      opacity: 1,
+    },
+  };
   return (
     <AppDiv>
       <Nav />
@@ -46,15 +62,22 @@ function App() {
           animate="visible"
         >
           {data.results?.map((popularMovieData: IMovieDetail) => (
-            <Link to={`${popularMovieData.id}`} key={popularMovieData.id}>
-              <MovieImgCard className="item" variants={item}>
-                <MovieImg
-                  src={`${makeImagePath(popularMovieData.poster_path)}`}
-                  key={popularMovieData.id}
-                />
-                <MovieTitle>{popularMovieData.title}</MovieTitle>
-              </MovieImgCard>
-            </Link>
+            <CardContainer
+              variants={cardVariants}
+              initial="start"
+              animate="end"
+              layoutId={String(popularMovieData.id)}
+            >
+              <Link to={`${popularMovieData.id}`} key={popularMovieData.id}>
+                <MovieImgCard className="item" variants={item}>
+                  <MovieImg
+                    src={`${makeImagePath(popularMovieData.poster_path)}`}
+                    key={popularMovieData.id}
+                  />
+                  <MovieTitle>{popularMovieData.title}</MovieTitle>
+                </MovieImgCard>
+              </Link>
+            </CardContainer>
           ))}
         </MovieImgContainer>
       )}
